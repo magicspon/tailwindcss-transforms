@@ -1,5 +1,22 @@
 const _ = require('lodash');
 
+/**
+ * @function go3d
+ * @param {Array} parts
+ * @param {String} selector
+ * @param {Sring} prop
+ * @return {Object}
+ */
+function go3d(parts, selector, prop) {
+  const clean = parts.map(part => part.trim());
+  if (clean.length !== 3) clean.push('0');
+  return {
+    [selector]: {
+      transform: `${prop}(${clean.join(',')})`
+    }
+	};
+}
+
 module.exports = ({
   variants = {},
   translate = {},
@@ -16,10 +33,21 @@ module.exports = ({
       '.transform-none': { transform: 'none' },
       ...Object.assign(
         {},
-        ..._.map(translate, (value, name) => ({
-          [`.${e(`translate-x-${name}`)}`]: { transform: `translateX(${value})` },
-          [`.${e(`translate-y-${name}`)}`]: { transform: `translateY(${value})` },
-        })),
+        ..._.map(translate, (value, name) => {
+          const parts = value.split(',');
+          if (parts.length > 1) {
+            return go3d(parts, `.${e(`translate-3d-${name}`)}`, 'translate3d');
+          }
+
+          return {
+            [`.${e(`translate-x-${name}`)}`]: {
+              transform: `translateX(${value})`
+            },
+            [`.${e(`translate-y-${name}`)}`]: {
+              transform: `translateY(${value})`
+            }
+          };
+        }),
         ..._.map(negativeTranslate, (value, name) => ({
           [`.${e(`-translate-x-${name}`)}`]: { transform: `translateX(-${value})` },
           [`.${e(`-translate-y-${name}`)}`]: { transform: `translateY(-${value})` },

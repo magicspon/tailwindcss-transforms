@@ -39,7 +39,9 @@ test('all the options are working as they should', () => {
   return generatePluginCss({
     translate: {
       '1/2': '50%',
-      'full': '100%',
+      full: '100%',
+      center: '-50%, -50%',
+      parallax: '20px, 10px, 100px'
     },
     negativeTranslate: {
       'full': '100%',
@@ -85,6 +87,12 @@ test('all the options are working as they should', () => {
       }
       .translate-y-full {
         transform: translateY(100%);
+      }
+      .translate-3d-center {
+        transform: translate3d(-50%, -50%, 0);
+      }
+      .translate-3d-parallax {
+        transform: translate3d(20px, 10px, 100px);
       }
       .-translate-x-full {
         transform: translateX(-100%);

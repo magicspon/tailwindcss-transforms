@@ -17,6 +17,8 @@ npm install tailwindcss-transforms
       translate: {
         '1/2': '50%',
         'full': '100%',
+        'center': '-50%, -50%',
+        'parallax': '20px, 10px, 100px'
       },
       negativeTranslate: {
         '1/2': '50%',
@@ -67,6 +69,14 @@ This plugin generates the following utilities:
 }
 .translate-y-[name] {
   transform: translateY([value]);
+}
+
+/* a comma separated list of values will create a 3d transform, if only two values are provided the z value defaults to 0  */
+.translate-3d-[name] {
+  transform: translate3d([...value]);
+}
+.translate-3d-[name] {
+  transform: translate3d([...value]);
 }
 
 /* configurable with the "negativeTranslate" option */
